@@ -1,169 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weather App</title>
 
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
 
-    <!-- Font Awesome for Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" />
 
-    <style>
-      body {
-        font-family: "Roboto", sans-serif;
-        background: linear-gradient(to right, #4facfe, #00f2fe);
-        color: #ffffff;
-        margin: 0;
-        padding: 0;
-      }
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-      nav {
-        padding: 20px 0;
-        background: rgba(0, 0, 0, 0.4);
-        text-align: center;
-      }
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-      nav h1 {
-        font-size: 2rem;
-        margin: 0;
-        color: #ffffff;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      }
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
+  <style>
+    body {
+      /*background: linear-gradient(to right, #616566, #57595c);*/
+      font-family: "Roboto", sans-serif;
+      background: linear-gradient(to right, #4facfe, #616566, #00f2fe, #57595c, #05c2f1);
+      /*background: linear-gradient(to right, #4facfe, #00d4ff, #00f2fe, #05c2f1, #4facfe);*/
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      margin: 0;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    nav {
+      /*padding: 20px;
+        background-color: #a2c2ec;
+        color: white;*/
+      padding: 20px 0;
+      background: rgba(0, 0, 0, 0.4);
+      text-align: center;
+      animation: fadeInDown 1.5s ease;
+    }
+
+    h1 {
+      font-size: 4rem;
+      margin: 0;
+      color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    .form-inline {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .form-control {
+      border: none;
+      border-radius: 30px 0 0 30px;
+      padding: 10px 20px;
+      font-size: 1.5rem;
+      width: 300px;
+      outline: none;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-success {
+      background: #ff7e5f;
+      border: none;
+      border-radius: 0 30px 30px 0;
+      padding: 10px 20px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-success:hover {
+      background: #f03708;
+      transform: scale(1.1);
+    }
+
+    .input-group {
+      max-width: 500px;
+    }
+
+    /* Weather Container 
+    .weather-container {
+      position: fixed;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      width: 500px;
+      z-index: 000;/* Ensures it's above other content 
+      padding: 20px;
+      margin: 15px 0;
+
+
+    }*/
+
+    .weather-card {
+      /*background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
         padding: 20px;
+        margin: 10px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;*/
+      /*background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 15px 0;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transform: perspective(800px) rotateX(0deg);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;*/
+      perspective: 1000px;
+      /* For 3D Effect */
+      transform: rotateY(360deg);
+      /* Initial Rotation for 3D */
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 15px 0;
+      transition: transform 0.6s ease-in-out, box-shadow 0.3s ease-in-out;
+
+    }
+
+    .weather-card:hover {
+      transform: scale(1.05);
+      transform: perspective(800px) rotateX(180deg);
+      transform: rotateY(360deg);
+      /* 3D Rotation */
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5), 0 10px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .week-weather {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .day {
+      text-align: center;
+      padding: 10px;
+      animation: fadeInUp 1.5s ease;
+    }
+
+    .weather-icon {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: #ffd700;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
       }
 
-      .form-inline {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
       }
 
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @media (max-width: 768px) {
       .form-control {
-        border: none;
-        border-radius: 30px 0 0 30px;
-        padding: 10px 20px;
-        font-size: 1rem;
-        width: 300px;
-        outline: none;
+        width: 80%;
       }
 
       .btn-success {
-        background: #ff7e5f;
-        border: none;
-        border-radius: 0 30px 30px 0;
-        padding: 10px 20px;
-        color: white;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
+        width: auto;
       }
+    }
 
-      .btn-success:hover {
-        background: #feb47b;
-      }
+    /* Inner Content Styling */
+    .weather-card-content h3,
+    .weather-card-content h4 {
+      margin: 10px 0;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
 
+    .weather-card-content .weather-icon {
+      width: 80px;
+      height: 80px;
+      margin: 20px auto;
+      display: block;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .weather-card-content .weather-icon:hover {
+      transform: scale(1.1) rotate(10deg);
+      /* Subtle 3D Animation */
+    }
+
+    /* Add Glow Effect */
+    .weather-card:hover .weather-icon {
+      box-shadow: 0 0 20px #00f2fe, 0 0 30px #4facfe;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
       .weather-card {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
-        padding: 20px;
-        margin: 15px 0;
-        text-align: center;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        width: 90%;
+        padding: 15px;
       }
+    }
+  </style>
+</head>
 
-      .weather-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-      }
+<body>
+  <nav class="text-center">
+    <h1>Weather Forecast</h1>
+  </nav>
 
-      .week-weather {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
-      }
-
-      .day h4 {
-        margin: 0 0 10px;
-        font-weight: 500;
-      }
-
-      .weather-icon {
-        font-size: 3rem;
-        margin-bottom: 10px;
-        color: #ffd700;
-      }
-
-      @media (max-width: 768px) {
-        .form-control {
-          width: 80%;
-        }
-
-        .btn-success {
-          width: auto;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <nav>
-      <h1>Weather Forecast</h1>
-    </nav>
-
-    <div class="container">
-      <form method="post" class="form-inline">
-        {% csrf_token %}
-        <input
-          type="text"
-          class="form-control"
-          name="city"
-          placeholder="Search for city"
-        />
-        <button class="btn btn-success" type="submit">
-          <i class="fas fa-search"></i>
-        </button>
-      </form>
-
-      <div class="weather-info">
-        {% if country_code and coordinate and temp and humidity %}
-        <div class="weather-card">
-          <h3>Country: {{ country_code }}</h3>
-          <h4>Coordinates: {{ coordinate }}</h4>
-          <h4>Temperature: {{ temp }}°C</h4>
-          <h4>Humidity: {{ humidity }}%</h4>
+  <center class="container fade-in">
+    <!-- Add CSRF Token within the form -->
+    <form method="post" class="form-inline">
+      {% csrf_token %}
+      <div class="input-group">
+        <input type="text" class="form-control" name="city" placeholder="Search for city" />
+        <div class="input-group-btn">
+          <button class="btn btn-success" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
         </div>
-        {% endif %}
       </div>
+    </form>
 
-      <div class="week-weather">
-        {% if forecast %}
-        {% for day in forecast %}
-        <div class="day weather-card">
-          <h4>{{ day.day }}</h4>
-          <div class="weather-icon">
-            <i class="fas fa-cloud-sun"></i>
-          </div>
-          <p>Temp: {{ day.temp }}°C</p>
-          <p>Humidity: {{ day.humidity }}%</p>
-        </div>
-        {% endfor %}
-        {% endif %}
+    <!--<div class="weather-info row">
+      {% if country_code and coordinate and temp and humidity %}
+      <div class="col-md-6 col-md-offset-3 weather-card fade-in">
+        <h3>
+          <i class="fas fa-flag"></i> Country: {{ country_code }}
+        </h3>
+        <h4>
+          <i class="fas fa-map-marker-alt"></i> Coordinates: {{ coordinate }}
+        </h4>
+        <h4>
+          <i class="fas fa-thermometer-half"></i> Temperature: {{ temp }}°C
+        </h4>
+        <h4>
+          <i class="fas fa-tint"></i> Humidity: {{ humidity }}%
+        </h4>
       </div>
+      {% endif %}
+    </div>-->
+
+  </center>
+   <div class="weather-card fade-in">
+    {% if error %}
+    <h4 class="text-danger">{{ error }}</h4>
+    {% else %}
+    <h3>{{ city }}, {{ country_code }}</h3>
+    <h4>Coordinates: {{ coordinate }}</h4>
+    <h4>Temperature: {{ temp }}°C</h4>
+    <h4>Humidity: {{ humidity }}%</h4>
+    <h4>Description: {{ description }}</h4>
+    <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png" alt="Weather Icon" />
+    {% endif %}
+  </div>
+  <!--<div class="weather-container">
+    <div class="weather-card fade-in">
+      {% if error %}
+      <h4 class="text-danger">{{ error }}</h4>
+      {% else %}
+      <div class="weather-card-content">
+        <h3>{{ city }}, {{ country_code }}</h3>
+        <h4>Coordinates: {{ coordinate }}</h4>
+        <h4>Temperature: {{ temp }}°C</h4>
+        <h4>Humidity: {{ humidity }}%</h4>
+        <h4>Description: {{ description }}</h4>
+        <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png" alt="Weather Icon" class="weather-icon" />
+      </div>
+      {% endif %}
     </div>
-  </body>
+  </div>-->
+
+
+  <div class="container week-weather fade-in">
+    {% if forecast %}
+    <!-- Loop over forecast data dynamically -->
+    {% for day in forecast %}
+    <div class="day weather-card">
+      <h4>{{ day.day }}</h4>
+      <div class="weather-icon">
+        <i class="fas fa-cloud-sun"></i> <!-- Replace with dynamic icons -->
+      </div>
+      <p>Temp: {{ day.temp }}°C</p>
+      <p>Humidity: {{ day.humidity }}%</p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <!-- Static weather info for demo -->
+    <div class="day weather-card">
+      <h4>Monday</h4>
+      <div class="weather-icon">
+        <i class="fas fa-cloud-sun"></i>
+      </div>
+      <p>Temp: 20°C</p>
+      <p>Humidity: 65%</p>
+    </div>
+    <div class="day weather-card">
+      <h4>Tuesday</h4>
+      <div class="weather-icon">
+        <i class="fas fa-sun"></i>
+      </div>
+      <p>Temp: 22°C</p>
+      <p>Humidity: 60%</p>
+    </div>
+    <div class="day weather-card">
+      <h4>Wednesday</h4>
+      <div class="weather-icon">
+        <i class="fas fa-cloud"></i>
+      </div>
+      <p>Temp: 18°C</p>
+      <p>Humidity: 70%</p>
+    </div>
+    <div class="day weather-card">
+      <h4>Thursday</h4>
+      <div class="weather-icon">
+        <i class="fas fa-cloud-showers-heavy"></i>
+      </div>
+      <p>Temp: 16°C</p>
+      <p>Humidity: 80%</p>
+    </div>
+    <div class="day weather-card">
+      <h4>Friday</h4>
+      <div class="weather-icon">
+        <i class="fas fa-cloud-sun-rain"></i>
+      </div>
+      <p>Temp: 19°C</p>
+      <p>Humidity: 75%</p>
+    </div>
+    <div class="day weather-card">
+      <h4>Saturday</h4>
+      <div class="weather-icon">
+        <i class="fas fa-sun"></i>
+      </div>
+      <p>Temp: 25°C</p>
+      <p>Humidity: 50%</p>
+    </div>
+    <div class="day weather-card">
+      <h4>Sunday</h4>
+      <div class="weather-icon">
+        <i class="fas fa-cloud-sun"></i>
+      </div>
+      <p>Temp: 21°C</p>
+      <p>Humidity: 60%</p>
+    </div>
+    {% endif %}
+  </div>
+</body>
+
 </html>
